@@ -2,12 +2,27 @@ from ariadne import gql
 
 type_defs = gql("""
     
+    scalar Upload
+    
     type Query {
-        all_categories : [Category!]!
-        all_products: [Product!]!
+        allCategories : [Category!]!
+        allProducts: [Product!]!
         product(id: Int!): Product!
     }
     
+    type Mutation {
+        createCategory(
+            name: String!
+        ): createCategoryPayload!
+        
+        createProduct(
+            categoryId: Int!
+            name: String!
+            description: String!
+            price: Float!
+            image: Upload!
+        ): createProductPayload!
+    }
     
     type Category {
         id: Int!
@@ -21,6 +36,18 @@ type_defs = gql("""
         name: String!
         description: String!
         image: String!
+    }
+    
+    type createCategoryPayload {
+        error: String!
+        success: Boolean!
+        category: Category
+    }
+    
+    type createProductPayload {
+        success: Boolean!
+        error: String!
+        product: Product!
     }
     
 """)
