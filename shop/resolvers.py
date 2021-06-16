@@ -39,6 +39,7 @@ def resolve_all_products(_, info):
             "category": prod.category
         } for prod in Product.objects.all()
     ]
+    return products
 
 
 @query.field('product')
@@ -98,6 +99,4 @@ def resolve_create_product(_, info, name, description, price, image, category_id
         }
 
 
-
 resolvers = [query, mutation, snake_case_fallback_resolvers, upload_scalar]
-

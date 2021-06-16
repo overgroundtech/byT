@@ -1,0 +1,97 @@
+scalar Upload
+scalar GenericScalar
+
+
+type Query {
+    # shop queries
+    allCategories : [Category!]!
+    allProducts: [Product!]!
+    product(id: Int!): Product!
+
+    #users Queries
+
+}
+
+type Mutation {
+    # shop mutations
+    createCategory(
+        name: String!
+    ): createCategoryPayload!
+
+    deleteCategory(id: Int!): deleteCategoryPayload
+
+    createProduct(
+        categoryId: Int!
+        name: String!
+        description: String!
+        price: Float!
+        image: Upload!
+    ): createProductPayload!
+
+    deleteProduct(id: Int): deleteProductPayload
+
+    #user mutations
+    verifyToken(token: String!): VerifyToken
+    refreshToken(token: String!): RefreshToken
+    tokenAuth(username: String!, password:String!): TokenAuth
+}
+
+type Category {
+    id: Int!
+    name: String!
+    products: [Product!]!
+}
+
+#shoptypes
+
+type Product {
+    id: Int!
+    category: Category!
+    name: String!
+    description: String!
+    image: String!
+}
+
+type createCategoryPayload {
+    error: String!
+    success: Boolean!
+    category: Category
+}
+
+type deleteCategoryPayload {
+    success: Boolean!
+    error: String!
+}
+
+type createProductPayload {
+    success: Boolean!
+    error: String!
+    product: Product!
+}
+
+type deleteProductPayload {
+    success: Boolean!
+    error: String!
+}
+
+#users types
+
+type VerifyToken {
+    payload: GenericScalar
+}
+
+type RefreshToken {
+    token: String
+    refresh_token: String
+    payload: GenericScalar
+}
+
+type TokenAuth {
+    token: String
+    refresh_token: String
+    payload: GenericScalar
+}
+
+type RevokeToken {
+    revoked: Int
+}
