@@ -74,6 +74,22 @@ def resolve_create_category(_, info, name):
         }
 
 
+@mutation.field("deleteCategory")
+def resolve_del_category(_, info, id):
+    try:
+        category = Category.objects.get(pk=id)
+        category.delete()
+        return {
+            "success": True,
+            "error": "No errors"
+        }
+    except ValueError as err:
+        return {
+            "success": False,
+            "error": err
+        }
+
+
 @mutation.field("createProduct")
 @convert_kwargs_to_snake_case
 def resolve_create_product(_, info, name, description, price, image, category_id):
@@ -96,6 +112,22 @@ def resolve_create_product(_, info, name, description, price, image, category_id
             "error": error,
             "success": False,
             "product": None
+        }
+
+
+@mutation.field("deleteProduct")
+def resolve_del_product(_, info, id):
+    try:
+        prod = Product.objects.get(pk=id)
+        prod.delete()
+        return {
+            "success": True,
+            "error": "none"
+        }
+    except ValueError as err:
+        return {
+            "success": False,
+            "error": err
         }
 
 

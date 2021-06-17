@@ -12,7 +12,7 @@ class Profile(models.Model):
     image = models.ImageField(upload_to='profile', default='user.png')
 
     def __str__(self):
-        return self.firstname
+        return self.user.username + ' profile'
 
 
 @receiver(post_save, sender=get_user_model())

@@ -9,6 +9,9 @@ type Query {
     product(id: Int!): Product!
 
     #users Queries
+    allUsers: [User!]!
+    user(id: Int!): User!
+    profile(UserId: Int!): Profile!
 
 }
 
@@ -31,6 +34,14 @@ type Mutation {
     deleteProduct(id: Int): deleteProductPayload
 
     #user mutations
+
+    Signup(
+        username: String!
+        email: String!
+        password: String!
+        password1: String!
+    ): SignupPayload
+
     verifyToken(token: String!): VerifyToken
     refreshToken(token: String!): RefreshToken
     tokenAuth(username: String!, password:String!): TokenAuth
@@ -70,11 +81,33 @@ type createProductPayload {
 }
 
 type deleteProductPayload {
-    success: Boolean!
-    error: String!
+    success: Boolean
+    error: String
 }
 
 #users types
+
+type User {
+    id: Int
+    username: String
+    email: String
+    profile: Profile
+}
+
+type Profile {
+    id: Int
+    user: User
+    firstname: String
+    lastname: String
+    phone: Int
+    image: String
+}
+
+type SignupPayload {
+    success: Boolean
+    error: String
+    user: User
+}
 
 type VerifyToken {
     payload: GenericScalar
