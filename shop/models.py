@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Profile
+from django.contrib.auth import get_user_model
 
 
 class Category(models.Model):
@@ -21,7 +21,7 @@ class Product(models.Model):
 
 
 class OrderItem(models.Model):
-    customer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    customer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total_price = models.FloatField()
@@ -31,7 +31,9 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
+    customer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     item = models.ManyToManyField(OrderItem)
+    total_price = models.FloatField()
     made_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

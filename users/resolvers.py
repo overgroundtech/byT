@@ -1,4 +1,4 @@
-from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case
+from ariadne import MutationType, QueryType, convert_kwargs_to_snake_case, snake_case_fallback_resolvers
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from ariadne_jwt import *
@@ -82,4 +82,4 @@ mutation.set_field('verifyToken', resolve_verify)
 mutation.set_field('refreshToken', resolve_refresh)
 mutation.set_field('tokenAuth', resolve_token_auth)
 
-resolvers = [query, mutation, GenericScalar]
+resolvers = [query, mutation, snake_case_fallback_resolvers, GenericScalar]

@@ -7,6 +7,7 @@ type Query {
     allCategories : [Category!]!
     allProducts: [Product!]!
     product(id: Int!): Product!
+    orderItem(id: Int): OrderItem
 
     #users Queries
     allUsers: [User!]!
@@ -47,13 +48,13 @@ type Mutation {
     tokenAuth(username: String!, password:String!): TokenAuth
 }
 
+#shoptypes
 type Category {
     id: Int!
     name: String!
     products: [Product!]!
 }
 
-#shoptypes
 
 type Product {
     id: Int!
@@ -61,6 +62,22 @@ type Product {
     name: String!
     description: String!
     image: String!
+}
+
+type OrderItem {
+    id: Int
+    product: Product
+    customer: User
+    quantity: Int
+    totalPrice: Float
+    time: String
+}
+
+type Order {
+    id: Int
+    orderItems: [OrderItem]
+    total_price: Float
+    customer: User
 }
 
 type createCategoryPayload {
@@ -84,6 +101,7 @@ type deleteProductPayload {
     success: Boolean
     error: String
 }
+
 
 #users types
 

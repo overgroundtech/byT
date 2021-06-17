@@ -131,4 +131,6 @@ def resolve_del_product(_, info, id):
         }
 
 
+
+
 resolvers = [query, mutation, snake_case_fallback_resolvers, upload_scalar]
