@@ -10,6 +10,7 @@ type Query {
     orderItem(id: Int): OrderItem
 
     #users Queries
+    me: User
     allUsers: [User!]!
     user(id: Int!): User!
     profile(UserId: Int!): Profile!

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from ariadne_jwt import *
 from .models import Profile
+from ariadne_jwt.decorators import login_required
 
 
 query = QueryType()
@@ -48,6 +49,11 @@ def resolve_profile(_, info, user_id):
         "image": f'{settings.SITE_DOMAIN_NAME}{prof.image.url}'
     }
 
+@query.field('me')
+@login_required
+def resolve_me(_, info):
+    user = info.context.get('request').user
+    return user
 
 @mutation.field("Signup")
 def resolve_signup(_, info, username, email, password, password1):
@@ -76,6 +82,7 @@ def resolve_signup(_, info, username, email, password, password1):
             "error": err,
             "user": None
         }
+
 
 
 mutation.set_field('verifyToken', resolve_verify)
